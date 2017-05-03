@@ -6,6 +6,7 @@ const app = express();
 const expressWs = require('express-ws')(app);
 
 type Command = 'ON' | 'OFF' | 'LIMITS' | 'TEMP' | 'HUMID' | 'MEAS' | 'STATUS' | 'SW' | 'PIN'
+type ResponseEvent = 'sent' | 'delivered' | 'response';
 
 app.ws('/sms', (ws, request) => {
   ws.on('open', () => {
@@ -63,41 +64,47 @@ function errorType(msg: string, ws: any) {
 }
 
 function messageSent(ws: any) {
-  ws.send('sent');
+  console.log('sending sent');
+  const event: ResponseEvent = 'sent';
+  ws.send(JSON.stringify({event}));
 }
 
 function messageDelivered(ws: any)  {
-  ws.send('delivered');
+  console.log('sending delivered');
+  const event: ResponseEvent = 'delivered';
+  ws.send(JSON.stringify({event}));
 }
 
 function messageResponse(type: Command, ws: any) {
-  let response: string;
+  console.log('sending response');
+  let msg: string;
   switch (type) {
     case 'ON':
-      response = 'OK, output control executed';
+      msg = 'OK, output control executed';
       break;
     case 'OFF':
-      response = 'OK, output control executed';
+      msg = 'OK, output control executed';
       break;
     case 'LIMITS':
-      response = 'OK, limits set: +15C, +30C';
+      msg = 'OK, limits set: +15C, +30C';
     case 'TEMP':
-      response = 'IN04=!+26C,IN05=-15C,IN06=+13C';
+      msg = 'IN04=!+26C,IN05=-15C,IN06=+13C';
       break;
     case 'HUMID':
-      response = 'Humidity: IN03=+16%';
+      msg = 'Humidity: IN03=+16%';
       break;
     case 'MEAS':
-      response = 'Measurements: IN01=76, IN03=+16%, IN04=!+26C,IN05=-15C, IN06=+13C, IN07=1293'
+      msg = 'Measurements: IN01=76, IN03=+16%, IN04=!+26C,IN05=-15C, IN06=+13C, IN07=1293'
       break;
     case 'STATUS':
-      response = 'Status: IN01=76, IN02=1, IN03=+16%, IN04=!+26C,IN05=-15C, IN06=+13C, IN07=1293, IN08=0'
+      msg = 'Status: IN01=76, IN02=1, IN03=+16%, IN04=!+26C,IN05=-15C, IN06=+13C, IN07=1293, IN08=0'
       break;
     case 'SW':
-      response = 'Test59209658,Typ: Airborne DC Dual     SS    SW: 1.16.58, Signal: 17, Switch: 2, Power: OK, Battery: OK, Tamper: OK, IP: OK'
+      msg = 'Test59209658,Typ: Airborne DC Dual     SS    SW: 1.16.58, Signal: 17, Switch: 2, Power: OK, Battery: OK, Tamper: OK, IP: OK'
       break;
   }
-  ws.send(response);
+  const event: ResponseEvent = 'response';
+  ws.send(JSON.stringify({event, msg}));
   ws.close(1000, 'message sent to sender, and response sent back to client');
 }
 
