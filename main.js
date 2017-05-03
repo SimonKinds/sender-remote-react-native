@@ -2,11 +2,17 @@ import Expo from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { sendSms } from './data/SmsApi';
+
 class App extends React.Component {
+  componentWillMount() {
+    sendSms('test', null);
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up main.js to start working on your app!</Text>
+        <Text>Testing</Text>
       </View>
     );
   }

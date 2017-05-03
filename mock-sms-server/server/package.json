@@ -12,7 +12,7 @@
     "flow-bin": "^0.45.0"
   },
   "scripts": {
-    "build": "babel-cli src/ -d lib/",
+    "build": "babel src/ -d lib/",
     "flow": "flow"
   }
 }
