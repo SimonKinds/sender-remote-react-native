@@ -3,23 +3,8 @@ import { StyleSheet, TouchableHighlight, View, Text, FlatList } from 'react-nati
 import { NavigationActions } from 'react-navigation';
 
 import { getSenders } from '../data/SenderRepository';
-function SenderItem(props) {
-  const { item } = props;
-  return (
-    <TouchableHighlight style={styles.item.container}
-      underlayColor='#d3d3d3'
-      onPress={() => alert('Clicked: ' + JSON.stringify(item))}>
-      <Text style={styles.item.text}>{item.name}</Text>
-    </TouchableHighlight>
-  )
-}
-
-function Separator() {
-  const style = { height: StyleSheet.hairlineWidth, backgroundColor: '#a9a9a9', }
-  return (
-    <View style={style} />
-  )
-}
+import { Separator } from '../common/CommonViews';
+import {ListItemStyle} from '../common/CommonStyles';
 
 function HeaderRight(props) {
   const { navigation } = props;
@@ -42,7 +27,9 @@ export default class SenderListScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { senders: [] };
+
     this.getSenders = this.getSenders.bind(this);
+    this.renderItem = this.renderItem.bind(this);
   }
 
   componentWillMount() {
@@ -57,7 +44,7 @@ export default class SenderListScreen extends Component {
       <FlatList
         style={styles.list}
         data={this.state.senders}
-        renderItem={SenderItem}
+        renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={Separator}
       />
@@ -66,6 +53,15 @@ export default class SenderListScreen extends Component {
 
   keyExtractor(sender, index) {
     return sender.name + sender.number;
+  }
+
+  renderItem({item}) {
+    return (
+      <TouchableHighlight style={ListItemStyle.container}
+        underlayColor='#d3d3d3'
+        onPress={() => this.props.navigation.navigate('CommandList', {sender: item})}>
+        <Text style={ListItemStyle.text}>{item.name}</Text>
+      </TouchableHighlight>);
   }
 
   async getSenders() {
@@ -78,20 +74,8 @@ export default class SenderListScreen extends Component {
   }
 }
 
-const styles = {
-  item: {
-    container: {
-      flex: 1,
-      padding: 12,
-      flexDirection: 'row',
-      alignItems: 'center'
-    },
-    text: {
-      marginLeft: 12,
-      fontSize: 16
-    }
-  },
+const styles = StyleSheet.create({
   list: {
     flex: 1
   }
-}
+});

@@ -5,10 +5,12 @@ import { StackNavigator } from 'react-navigation';
 
 import SenderListScreen from './screens/SenderListScreen';
 import SenderCreateScreen from './screens/SenderCreateScreen';
+import CommandListScreen from './screens/CommandListScreen';
 
 const App = StackNavigator({
   Home: { screen: SenderListScreen },
-  SenderCreate: { screen: SenderCreateScreen }
+  SenderCreate: { screen: SenderCreateScreen },
+  CommandList: {screen: CommandListScreen}
 })
 
 Expo.registerRootComponent(App);
