@@ -1,5 +1,3 @@
-// @flow
-
 import Expo from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
@@ -7,8 +5,6 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { sendSms } from './data/SmsApi';
 
 class App extends React.Component {
-  componentWillMount() {
-  }
 
   render() {
     return (

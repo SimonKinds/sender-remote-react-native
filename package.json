@@ -5,17 +5,12 @@
   "author": "Simon Kindström",
   "private": true,
   "main": "main.js",
-  "scripts": {
-    "flow": "flow"
-  },
   "dependencies": {
     "expo": "16.0.0",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-16.0.0.tar.gz"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-flow": "^6.23.0",
-    "flow-bin": "^0.45.0"
+    "babel-cli": "^6.24.1"
   }
 }

@@ -1,12 +1,8 @@
-// @flow
-
 const protocol = 'ws://';
 const host = '10.0.2.2:9137';
 const path = '/sms';
 
-export type ResponseEvent = 'sent' | 'delivered' | 'response';
-
-export function sendSms(to: string, msg: string, callback: (event: ResponseEvent, msg?: string) => void) {
+export function sendSms(to, msg, callback) {
   console.log('opening to ' + protocol + host + path);
   const ws = new WebSocket(protocol + host + path);
 
@@ -16,7 +12,7 @@ export function sendSms(to: string, msg: string, callback: (event: ResponseEvent
   };
 
   ws.onmessage = (response) => {
-    const parsedResponse: { event: ResponseEvent, msg?: string } = JSON.parse(((response.data: any): string));
+    const parsedResponse= JSON.parse(response.data);
     callback(parsedResponse.event, parsedResponse.msg);
   };
 }
