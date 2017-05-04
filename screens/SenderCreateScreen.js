@@ -61,8 +61,9 @@ export default class SenderCreateScreen extends Component {
     } else {
       try {
         await insertSender(sender);
-        const senders = await getSenders();
-        alert('Sender created successfully!');
+        const {navigation} = this.props;
+        navigation.state.params.refreshSenders();
+        navigation.goBack();
       } catch (error) {
         console.log('Error while saving / getting senders ' + error);
       }

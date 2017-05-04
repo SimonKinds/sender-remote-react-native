@@ -3,7 +3,6 @@ import { StyleSheet, TouchableHighlight, View, Text, FlatList } from 'react-nati
 import { NavigationActions } from 'react-navigation';
 
 import { getSenders } from '../data/SenderRepository';
-
 function SenderItem(props) {
   const { item } = props;
   return (
@@ -23,40 +22,34 @@ function Separator() {
 }
 
 function HeaderRight(props) {
-  console.log('creating header');
+  const { navigation } = props;
+  let name = 'empty';
+  if (navigation.state != null && navigation.state.params != null) {
+    params = { refreshSenders: navigation.state.params.refreshSenders };
+  }
   return (
-    <Text
-      onPress={() => this.props.navigate('SenderCreate')}>
-      Create
+    <Text onPress={() => navigation.navigate('SenderCreate', params)}>
+      Create Sender
   </Text>);
 }
 
 export default class SenderListScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return ({
-      title: 'Sender Remote',
-      headerRight: (
-        <Text onPress={() => navigation.navigate('SenderCreate')}>
-          Create Sender
-        </Text>
-      )
-    });
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Sender Remote',
+    headerRight: <HeaderRight navigation={navigation} />
+  });
 
   constructor(props) {
     super(props);
-
     this.state = { senders: [] };
+    this.getSenders = this.getSenders.bind(this);
   }
 
-  async componentWillMount() {
-    try {
-      const senders = await getSenders();
-      console.log(JSON.stringify(senders));
-      this.setState({ senders })
-    } catch (error) {
-      console.log('Could not fetch senders: ' + error);
-    }
+  componentWillMount() {
+    this.getSenders();
+
+    // use a callback in the child screen to refresh the sender list
+    this.props.navigation.setParams({ refreshSenders: this.getSenders });
   }
 
   render() {
@@ -73,6 +66,15 @@ export default class SenderListScreen extends Component {
 
   keyExtractor(sender, index) {
     return sender.name + sender.number;
+  }
+
+  async getSenders() {
+    try {
+      const senders = await getSenders();
+      this.setState({ senders })
+    } catch (error) {
+      console.log('Could not fetch senders: ' + error);
+    }
   }
 }
 

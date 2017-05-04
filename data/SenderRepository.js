@@ -4,7 +4,6 @@ import _ from 'lodash';
 export async function getSenders() {
   try {
     const senders = await AsyncStorage.getItem('senders');
-
     return JSON.parse(senders);
   } catch (error) {
     console.log(error);
