@@ -5,17 +5,6 @@ import { getCommands } from '../data/CommandRepository';
 import { Separator } from '../common/CommonViews';
 import { ListItemStyle } from '../common/CommonStyles';
 
-function CommandItem(props) {
-  const { item } = props;
-  return (
-    <TouchableHighlight style={ListItemStyle.container}
-      underlayColor='#d3d3d3'
-      onPress={() => alert('Clicked: ' + JSON.stringify(item))}>
-      <Text style={ListItemStyle.text}>{item.description}</Text>
-    </TouchableHighlight>
-  )
-}
-
 export default class CommandListScreen extends Component {
   static navigationOptions = ({navigation}) => {
     return {
@@ -46,7 +35,7 @@ export default class CommandListScreen extends Component {
     />
   }
 
-  keyExtractor(command, index) {
+  keyExtractor(command) {
     return command.type;
   }
 
