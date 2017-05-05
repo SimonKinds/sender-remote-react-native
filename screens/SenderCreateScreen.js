@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Keyboard, View, Text, TextInput, Button } from 'react-native';
+import { StyleSheet, Keyboard, View, Button, Alert } from 'react-native';
 import t from 'tcomb-form-native';
+import _ from 'lodash';
 
-import {insertSender, getSenders} from '../data/SenderRepository';
+import { insertSender } from '../data/SenderRepository';
+import { sendSms } from '../data/SmsApi';
 
 
 const Form = t.form.Form;
@@ -36,6 +38,7 @@ export default class SenderCreateScreen extends Component {
     super(props);
 
     this.createSender = this.createSender.bind(this);
+    this.fetchPorts = this.fetchPorts.bind(this);
   }
 
   render() {
@@ -55,21 +58,52 @@ export default class SenderCreateScreen extends Component {
   }
 
   async createSender() {
-    const sender = this.refs.form.getValue();
+    let sender = this.refs.form.getValue();
     if (sender == null) {
       console.log('Invalid sender is trying to get created');
     } else {
-      try {
-        await insertSender(sender);
-        const {navigation} = this.props;
-        navigation.state.params.refreshSenders();
-        navigation.goBack();
-      } catch (error) {
-        console.log('Error while saving / getting senders ' + error);
-      }
+      Alert.alert('Contacting Sender', 'Validating PIN and getting port count...');
+
+      this.fetchPorts(sender, async (event, msg) => {
+        if (event == 'response') {
+          if (msg.toLowerCase().includes('error')) {
+            Alert.alert('Error', msg);
+          } else {
+            const split = msg.split(',');
+            const inCount = _.chain(split)
+              .filter(x => x.toLowerCase().includes('in'))
+              .size()
+              .value();
+            const outCount = _.chain(split)
+              .filter(x => x.toLowerCase().includes('out'))
+              .size()
+              .value();
+
+            sender = {
+              ...sender,
+              inCount,
+              outCount
+            };
+
+            try {
+              await insertSender(sender);
+              const { navigation } = this.props;
+              navigation.state.params.refreshSenders();
+              navigation.goBack();
+            } catch (error) {
+              console.log('Error while saving / getting senders ' + error);
+            }
+          }
+        }
+      });
     }
   }
+
+  fetchPorts(sender, callback) {
+    sendSms(sender.number, 'STATUS ' + sender.pin, callback);
+  }
 }
+
 
 const styles = StyleSheet.create({
   container: {
