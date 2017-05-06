@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Keyboard, View, Button, Alert } from 'react-native';
+import {NavigationActions} from 'react-navigation';
 import t from 'tcomb-form-native';
 import _ from 'lodash';
 
@@ -39,7 +40,7 @@ export default class SenderCreateScreen extends Component {
     super(props);
 
     this.createSender = this.createSender.bind(this);
-    this.fetchPorts = this.fetchPorts.bind(this);
+    this.onResponse = this.onResponse.bind(this);
   }
 
   render() {
@@ -63,45 +64,55 @@ export default class SenderCreateScreen extends Component {
     if (sender == null) {
       console.log('Invalid sender is trying to get created');
     } else {
-      Alert.alert('Contacting Sender', 'Validating PIN and getting port count...');
-
-      this.fetchPorts(sender, async (event, msg) => {
-        if (event == 'response') {
-          if (msg.toLowerCase().includes('error')) {
-            Alert.alert('Error', msg);
-          } else {
-            const split = msg.split(',');
-            const inCount = _.chain(split)
-              .filter(x => x.toLowerCase().includes('in'))
-              .size()
-              .value();
-            const outCount = _.chain(split)
-              .filter(x => x.toLowerCase().includes('out'))
-              .size()
-              .value();
-
-            sender = {
-              ...sender,
-              inCount,
-              outCount
-            };
-
-            try {
-              await insertSender(sender);
-              const { navigation } = this.props;
-              navigation.state.params.refreshSenders();
-              navigation.goBack();
-            } catch (error) {
-              console.log('Error while saving / getting senders ' + error);
-            }
-          }
-        }
-      });
+      this.props.navigation.navigate('SmsProgress',
+        {
+          responseCallback: ((msg) => this.onResponse(msg, sender)),
+          to: sender.number,
+          msg: 'STATUS ' + sender.pin
+        });
     }
   }
 
-  fetchPorts(sender, callback) {
-    sendSms(sender.number, 'STATUS ' + sender.pin, callback);
+  async onResponse(msg, sender) {
+    if (msg.toLowerCase().includes('error')) {
+      Alert.alert('Error', msg);
+    } else {
+      const split = msg.split(',');
+      const inCount = _.chain(split)
+        .filter(x => x.toLowerCase().includes('in'))
+        .size()
+        .value();
+      const outCount = _.chain(split)
+        .filter(x => x.toLowerCase().includes('out'))
+        .size()
+        .value();
+
+      sender = {
+        ...sender,
+        inCount,
+        outCount
+      };
+
+      try {
+        await insertSender(sender);
+        const { navigation } = this.props;
+
+        // if creating more than 1 sender the list doesn't get recreated
+        // TODO: currently results in renders of destroyed objects for some reason
+        await navigation.state.params.refreshSenders();
+
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Home' })
+          ]
+        })
+        navigation.dispatch(resetAction)
+
+      } catch (error) {
+        console.log('Error while saving / getting senders ' + error);
+      }
+    }
   }
 }
 
