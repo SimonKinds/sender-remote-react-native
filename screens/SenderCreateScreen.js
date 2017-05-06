@@ -12,7 +12,7 @@ const Form = t.form.Form;
 const sender = t.struct({
   name: t.String,
   number: t.String,
-  pin: t.Number
+  pin: t.String
 });
 
 const formOptions = {
@@ -24,6 +24,7 @@ const formOptions = {
       keyboardType: 'phone-pad'
     },
     pin: {
+      keyboardType: 'numeric',
       secureTextEntry: true
     }
   }

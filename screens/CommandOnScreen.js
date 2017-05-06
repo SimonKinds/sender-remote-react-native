@@ -21,10 +21,10 @@ export default class CommandOnScreen extends Component {
     for (let i = 1; i <= sender.outCount; ++i) {
       structObject['output ' + i] = t.Boolean;
     }
-    structObject['pin'] = t.Number;
+    structObject['pin'] = t.String;
 
     this.formModel = t.struct(structObject);
-    this.formOptions = {template: CommandOnTemplate, fields: {pin: {secureTextEntry: true}}};
+    this.formOptions = {template: CommandOnTemplate, fields: {pin: {keyboardType: 'numeric', secureTextEntry: true}}};
 
     this.state = {formValue: {pin: sender.pin}};
   }
