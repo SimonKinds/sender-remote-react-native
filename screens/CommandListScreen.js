@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {StyleSheet, FlatList, TouchableHighlight, Text} from 'react-native';
+import { StyleSheet, FlatList, TouchableHighlight, Text } from 'react-native';
 
 import { getCommands } from '../data/CommandRepository';
 import { Separator } from '../common/CommonViews';
 import { ListItemStyle } from '../common/CommonStyles';
 
 export default class CommandListScreen extends Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.state.params.sender.name
     };
@@ -15,7 +15,7 @@ export default class CommandListScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {commands: []};
+    this.state = { commands: [] };
 
     this.getCommands = this.getCommands.bind(this);
     this.renderItem = this.renderItem.bind(this);
@@ -23,15 +23,15 @@ export default class CommandListScreen extends Component {
 
   componentWillMount() {
     this.getCommands();
-  } 
+  }
 
   render() {
     return <FlatList
-        style={styles.list}
-        data={this.state.commands}
-        renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
-        ItemSeparatorComponent={Separator}
+      style={styles.list}
+      data={this.state.commands}
+      renderItem={this.renderItem}
+      keyExtractor={this.keyExtractor}
+      ItemSeparatorComponent={Separator}
     />
   }
 
@@ -39,11 +39,21 @@ export default class CommandListScreen extends Component {
     return command.type;
   }
 
-  renderItem({item}) {
+  renderItem({ item }) {
+    const {navigation} = this.props;
     return (
       <TouchableHighlight style={ListItemStyle.container}
         underlayColor='#d3d3d3'
-        onPress={() => alert('Clicked: ' + JSON.stringify(item))}>
+        onPress={() => {
+          if (item.type == 'on') {
+            navigation.navigate('CommandOn', {
+              sender: navigation.state.params.sender,
+              command: item
+            });
+          } else {
+            alert('Clicked: ' + JSON.stringify(item))
+          }
+        }}>
         <Text style={ListItemStyle.text}>{item.description}</Text>
       </TouchableHighlight>
     )

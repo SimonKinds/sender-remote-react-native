@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 
 import { getSenders } from '../data/SenderRepository';
 import { Separator } from '../common/CommonViews';
-import {ListItemStyle} from '../common/CommonStyles';
+import { ListItemStyle } from '../common/CommonStyles';
 
 function HeaderRight(props) {
   const { navigation } = props;
@@ -55,11 +55,11 @@ export default class SenderListScreen extends Component {
     return sender.name + sender.number;
   }
 
-  renderItem({item}) {
+  renderItem({ item }) {
     return (
       <TouchableHighlight style={ListItemStyle.container}
         underlayColor='#d3d3d3'
-        onPress={() => this.props.navigation.navigate('CommandList', {sender: item})}>
+        onPress={() => this.props.navigation.navigate('CommandList', { sender: item })}>
         <Text style={ListItemStyle.text}>{item.name}</Text>
       </TouchableHighlight>);
   }
