@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 
 import t from 'tcomb-form-native';
 
@@ -13,13 +13,20 @@ export default class CommandOnScreen extends Component {
   constructor(props) {
     super(props);
 
+    this.onValueChange = this.onValueChange.bind(this);
+
     const { sender } = props.navigation.state.params;
 
     let structObject = {};
     for (let i = 1; i <= sender.outCount; ++i) {
-      structObject['Output ' + i] = t.Boolean;
+      structObject['output ' + i] = t.Boolean;
     }
+    structObject['pin'] = t.Number;
+
     this.formModel = t.struct(structObject);
+    this.formOptions = {template: CommandOnTemplate, fields: {pin: {secureTextEntry: true}}};
+
+    this.state = {formValue: {pin: sender.pin}};
   }
 
   render() {
@@ -27,17 +34,27 @@ export default class CommandOnScreen extends Component {
       <Form
         ref='form'
         type={this.formModel}
-        options={{template: CommandOnTemplate}}
+        options={this.formOptions}
+        value={this.state.formValue}
+        onChange={this.onValueChange}
       />
+      <Button title='Send' onPress={() => alert('should send ' + JSON.stringify(this.refs.form.getValue()))}/>
     </View>)
+  }
+
+  onValueChange(value) {
+    this.setState({formValue: value})
   }
 }
 
 function CommandOnTemplate(locals) {
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 0}}>
       <View style={styles.checkboxContainer}>
         {getOutputs(locals.inputs)}
+       </View>
+       <View>
+        {locals.inputs.pin}
        </View>
     </View>
   )
@@ -58,13 +75,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 10
+    padding: 10,
   },
   checkboxContainer: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     flexWrap: 'wrap'
   },
   checkbox: {
