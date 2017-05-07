@@ -1,11 +1,15 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import PropTypes from 'prop-types';
+import {StyleSheet, View, Text, Button} from 'react-native';
 
 import {sendSms} from '../data/SmsApi';
 
-export default class SmsProgressScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Contacting Sender'
+export default class SmsProgress extends React.Component {
+  static propTypes = {
+    responseCallback: PropTypes.func.isRequired,
+    to: PropTypes.string.isRequired,
+    msg: PropTypes.string.isRequired,
+    cancelCallback: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -18,14 +22,13 @@ export default class SmsProgressScreen extends React.Component {
   }
 
   componentWillMount() {
-    const {to, msg} = this.props.navigation.state.params;
+    const {to, msg} = this.props;
     sendSms(to, msg, this.smsCallback);
   }
 
   async smsCallback(event, msg) {
     if (event === 'response') {
-      const {navigation} = this.props;
-      await navigation.state.params.responseCallback(msg);
+      await this.props.responseCallback(msg);
     } else {
       this.setState({ responseState: event })
     }
@@ -37,6 +40,7 @@ export default class SmsProgressScreen extends React.Component {
         <Text style={styles.text}>
           {this.responseStateToString(this.state.responseState)}
         </Text>
+        <Button style={styles.button} title='Cancel' onPress={() => this.props.cancelCallback()}/>
       </View>)
   }
 
@@ -60,5 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10
   },
-  text: {}
+  text: {flex: 0},
+  button: {flex: 0}
 })

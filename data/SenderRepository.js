@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 export async function getSenders() {
   try {
+    //await AsyncStorage.clear();
     const senders = await AsyncStorage.getItem('senders');
     return JSON.parse(senders);
   } catch (error) {

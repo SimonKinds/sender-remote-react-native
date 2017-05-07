@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Keyboard, View, Button, Alert } from 'react-native';
+import { StyleSheet, Keyboard, View, Button, Alert, Modal } from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import t from 'tcomb-form-native';
 import _ from 'lodash';
 
 import { insertSender } from '../data/SenderRepository';
-import { sendSms } from '../data/SmsApi';
-
+import SmsProgress from '../components/SmsProgress';
 
 const Form = t.form.Form;
 
@@ -41,15 +40,27 @@ export default class SenderCreateScreen extends Component {
 
     this.createSender = this.createSender.bind(this);
     this.onResponse = this.onResponse.bind(this);
+
+    this.state = {to: '', msg: '', sendingCommand: false, formValue: {}}
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Modal visible={this.state.sendingCommand}
+          onRequestClose={() => this.setState({ sendingCommand: false })}>
+          <SmsProgress
+            responseCallback={(msg) => this.onResponse(msg, this.state.formValue)}
+            cancelCallback={() => this.setState({sendingCommand: false})}
+            to={this.state.to}
+            msg={this.state.msg} />
+        </Modal>
         <Form
           ref="form"
           type={sender}
           options={formOptions}
+          value={this.state.formValue}
+          onChange={(value) => this.setState({formValue: value})}
         />
         <Button title='Create'
           onPress={() => {
@@ -64,16 +75,20 @@ export default class SenderCreateScreen extends Component {
     if (sender == null) {
       console.log('Invalid sender is trying to get created');
     } else {
-      this.props.navigation.navigate('SmsProgress',
-        {
-          responseCallback: ((msg) => this.onResponse(msg, sender)),
+      this.setState( {
           to: sender.number,
-          msg: 'STATUS ' + sender.pin
-        });
+          msg: 'STATUS ' + sender.pin,
+          sendingCommand: true
+      });
     }
   }
 
   async onResponse(msg, sender) {
+    // if user canceled the request
+    if (!this.state.sendingCommand) {
+      return;
+    }
+
     if (msg.toLowerCase().includes('error')) {
       Alert.alert('Error', msg);
     } else {
@@ -101,13 +116,7 @@ export default class SenderCreateScreen extends Component {
         // TODO: currently results in renders of destroyed objects for some reason
         await navigation.state.params.refreshSenders();
 
-        const resetAction = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Home' })
-          ]
-        })
-        navigation.dispatch(resetAction)
+        navigation.goBack();
 
       } catch (error) {
         console.log('Error while saving / getting senders ' + error);

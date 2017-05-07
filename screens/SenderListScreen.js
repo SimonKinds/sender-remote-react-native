@@ -51,7 +51,7 @@ export default class SenderListScreen extends Component {
     )
   }
 
-  keyExtractor(sender, index) {
+  keyExtractor(sender) {
     return sender.name + sender.number;
   }
 
