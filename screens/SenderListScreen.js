@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React, { Component } from 'react';
 import { StyleSheet, TouchableHighlight, View, Text, FlatList } from 'react-native';
 import { NavigationActions } from 'react-navigation';
@@ -21,7 +22,10 @@ function HeaderRight(props) {
 export default class SenderListScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Sender Remote',
-    headerRight: <HeaderRight navigation={navigation} />
+    headerRight: <HeaderRight navigation={navigation} />,
+    headerStyle: {
+      marginTop: Expo.Constants.statusBarHeight
+    }
   });
 
   constructor(props) {

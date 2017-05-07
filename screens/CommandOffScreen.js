@@ -3,17 +3,17 @@ import React from 'react';
 
 import CommandToggleOutput from '../components/CommandToggleOutput';
 
-export default function CommandOnScreen(props) {
+export default function CommandOffScreen(props) {
   return <CommandToggleOutput sender={props.navigation.state.params.sender} onResponse={(response) => onResponse(response, props.navigation.navigate)}
-    commandHeader={'ON'} />
+    commandHeader={'OFF'} />
 }
 
 function onResponse(response, navigate) {
   navigate('ResponseOn', { response });
 }
 
-CommandOnScreen.navigationOptions = {
-  title: 'On Command',
+CommandOffScreen.navigationOptions = {
+  title: 'Off Command',
   headerStyle: {
     marginTop: Expo.Constants.statusBarHeight
   }

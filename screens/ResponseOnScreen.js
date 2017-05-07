@@ -1,9 +1,23 @@
+import Expo from 'expo';
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 export default class ResponseOnScreen extends React.Component {
-  static navigationOptions = ({
-    title: 'Success'
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Success',
+    headerRight: (<Text onPress={() => {
+      const resetAction = NavigationActions.reset(({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'SenderList' })
+        ]
+      }));
+      navigation.dispatch(resetAction);
+    }}>Done</Text>),
+    headerStyle: {
+      marginTop: Expo.Constants.statusBarHeight
+    }
   });
 
   constructor(props) {

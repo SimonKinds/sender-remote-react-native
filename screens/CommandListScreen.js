@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, TouchableHighlight, Text } from 'react-native';
 
@@ -8,7 +9,10 @@ import { ListItemStyle } from '../common/CommonStyles';
 export default class CommandListScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.state.params.sender.name
+      title: navigation.state.params.sender.name,
+      headerStyle: {
+        marginTop: Expo.Constants.statusBarHeight
+      }
     };
   };
 
@@ -40,13 +44,22 @@ export default class CommandListScreen extends Component {
   }
 
   renderItem({ item }) {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     return (
       <TouchableHighlight style={ListItemStyle.container}
         underlayColor='#d3d3d3'
         onPress={() => {
-          if (item.type == 'on') {
-            navigation.navigate('CommandOn', {
+          let destination = null;
+          switch (item.type) {
+            case 'on':
+              destination = 'CommandOn';
+              break;
+            case 'off':
+              destination = 'CommandOff';
+          }
+
+          if (destination) {
+            navigation.navigate(destination, {
               sender: navigation.state.params.sender,
               command: item
             });

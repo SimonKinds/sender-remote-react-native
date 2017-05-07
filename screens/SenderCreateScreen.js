@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React, { Component } from 'react';
 import { StyleSheet, Keyboard, View, Button, Alert, Modal } from 'react-native';
 import {NavigationActions} from 'react-navigation';
@@ -32,7 +33,10 @@ const formOptions = {
 
 export default class SenderCreateScreen extends Component {
   static navigationOptions = {
-    title: 'Create sender'
+    title: 'Create sender',
+    headerStyle: {
+      marginTop: Expo.Constants.statusBarHeight
+    }
   };
 
   constructor(props) {
