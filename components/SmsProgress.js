@@ -15,7 +15,7 @@ export default class SmsProgress extends React.Component {
   constructor(props) {
     super(props);
 
-    this.smsCallback = this.smsCallback.bind(this);
+    this.smsCallback = this.smsSubscriber.bind(this);
     this.responseStateToString = this.responseStateToString.bind(this);
 
     this.state = {responseState: 'server'};
@@ -23,10 +23,15 @@ export default class SmsProgress extends React.Component {
 
   componentWillMount() {
     const {to, msg} = this.props;
-    sendSms(to, msg, this.smsCallback);
+    this.smsSubscription = sendSms(to, msg)
+                          .subscribe((response) => this.smsSubscriber(response));
   }
 
-  async smsCallback(event, msg) {
+  componentWillUnmount() {
+    this.smsSubscription.unsubscribe();
+  }
+
+  async smsSubscriber({event, msg}) {
     if (event === 'response') {
       await this.props.responseCallback(msg);
     } else {
