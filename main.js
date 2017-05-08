@@ -8,7 +8,7 @@ import CommandListScreen from './screens/CommandListScreen';
 import CommandOnScreen from './screens/CommandOnScreen';
 import CommandOffScreen from './screens/CommandOffScreen';
 
-import ResponseOnScreen from './screens/ResponseOnScreen';
+import ResponseToggleOutputScreen from './screens/ResponseToggleOutputScreen';
 
 const App = StackNavigator({
   SenderList: { screen: SenderListScreen },
@@ -19,7 +19,7 @@ const App = StackNavigator({
   CommandOn: {screen: CommandOnScreen},
   CommandOff: {screen: CommandOffScreen},
 
-  ResponseOn: {screen: ResponseOnScreen}
+  ResponseToggleOutput: {screen: ResponseToggleOutputScreen}
 });
 
 Expo.registerRootComponent(App);

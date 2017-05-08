@@ -9,7 +9,7 @@ export default function CommandOffScreen(props) {
 }
 
 function onResponse(response, navigate) {
-  navigate('ResponseOn', { response });
+  navigate('ResponseToggleOutput', { response });
 }
 
 CommandOffScreen.navigationOptions = {
