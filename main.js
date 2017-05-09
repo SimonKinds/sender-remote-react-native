@@ -7,6 +7,7 @@ import SenderCreateScreen from './screens/SenderCreateScreen';
 import CommandListScreen from './screens/CommandListScreen';
 import CommandOnScreen from './screens/CommandOnScreen';
 import CommandOffScreen from './screens/CommandOffScreen';
+import CommandLimitsScreen from './screens/CommandLimitsScreen';
 
 import ResponseToggleOutputScreen from './screens/ResponseToggleOutputScreen';
 
@@ -18,6 +19,7 @@ const App = StackNavigator({
 
   CommandOn: {screen: CommandOnScreen},
   CommandOff: {screen: CommandOffScreen},
+  CommandLimits: {screen: CommandLimitsScreen},
 
   ResponseToggleOutput: {screen: ResponseToggleOutputScreen}
 });
