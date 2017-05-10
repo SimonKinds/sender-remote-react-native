@@ -87,6 +87,7 @@ function messageResponse(type: Command, ws: any) {
       break;
     case 'LIMITS':
       msg = 'OK, limits set: +15C, +30C';
+      break;
     case 'TEMP':
       msg = 'IN04=!+26C,IN05=-15C,IN06=+13C';
       break;
