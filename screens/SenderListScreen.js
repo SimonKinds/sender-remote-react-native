@@ -1,7 +1,6 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, TouchableHighlight, View, Text, FlatList } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { StyleSheet, TouchableHighlight, Text, FlatList } from 'react-native';
 
 import { getSenders } from '../data/SenderRepository';
 import { Separator } from '../common/CommonViews';

@@ -56,8 +56,13 @@ export default class CommandListScreen extends Component {
               break;
             case 'off':
               destination = 'CommandOff';
+              break;
             case 'limits':
               destination = 'CommandLimits';
+              break;
+            case 'pin':
+              destination = 'CommandPin';
+              break;
           }
 
           if (destination) {

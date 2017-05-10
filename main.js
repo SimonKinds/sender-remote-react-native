@@ -8,6 +8,7 @@ import CommandListScreen from './screens/CommandListScreen';
 import CommandOnScreen from './screens/CommandOnScreen';
 import CommandOffScreen from './screens/CommandOffScreen';
 import CommandLimitsScreen from './screens/CommandLimitsScreen';
+import CommandPinScreen from './screens/CommandPinScreen';
 
 import ResponseToggleOutputScreen from './screens/ResponseToggleOutputScreen';
 import ResponseLimitsScreen from './screens/ResponseLimitsScreen';
@@ -21,6 +22,7 @@ const App = StackNavigator({
   CommandOn: {screen: CommandOnScreen},
   CommandOff: {screen: CommandOffScreen},
   CommandLimits: {screen: CommandLimitsScreen},
+  CommandPin: {screen: CommandPinScreen},
 
   ResponseToggleOutput: {screen: ResponseToggleOutputScreen},
   ResponseLimits: {screen: ResponseLimitsScreen}
