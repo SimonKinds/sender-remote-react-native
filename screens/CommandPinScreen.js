@@ -40,9 +40,9 @@ export default class CommandPinScreen extends React.Component {
           visible={this.state.sendingCommand}
           onRequestClose={() => this.setState({ sendingCommand: false })}>
           <SmsProgress
-            responseCallback={(msg) => {
+            responseCallback={(response) => {
               this.setState({ sendingCommand: false });
-              alert(this.createMessage(this.state.formValue));
+              navigation.navigate('ResponsePin', {response});
             }}
             cancelCallback={() => this.setState({sendingCommand: false})}
             to={navigation.state.params.sender.number}
