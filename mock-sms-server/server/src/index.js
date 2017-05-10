@@ -103,6 +103,9 @@ function messageResponse(type: Command, ws: any) {
     case 'SW':
       msg = 'Test59209658,Typ: Airborne DC Dual     SS    SW: 1.16.58, Signal: 17, Switch: 2, Power: OK, Battery: OK, Tamper: OK, IP: OK'
       break;
+    case 'PIN':
+      msg = 'OK, new PIN lagrad';
+      break;
   }
   const event: ResponseEvent = 'response';
   ws.send(JSON.stringify({event, msg}));
