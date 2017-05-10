@@ -1,8 +1,10 @@
 import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Button} from 'react-native';
+import {StyleSheet, View, Button, Modal} from 'react-native';
 import t from 'tcomb-form-native';
+
+import SmsProgress from '../components/SmsProgress';
 
 const Form = t.form.Form;
 
@@ -28,6 +30,8 @@ export default class CommandLimitsScreen extends React.Component {
     super(props);
 
     this.onValueChange = this.onValueChange.bind(this);
+    this.onResponse = this.onResponse.bind(this);
+    this.createMessage = this.createMessage.bind(this);
 
     const {sender} = this.props.navigation.state.params;
 
@@ -43,24 +47,33 @@ export default class CommandLimitsScreen extends React.Component {
       }
     }
 
-    this.state = { formValue: { pin: sender.pin } };
+    this.state = { sendingCommand: false, formValue: { pin: sender.pin } };
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Form 
+        <Modal
+          visible={this.state.sendingCommand}
+          onRequestClose={() => this.setState({ sendingCommand: false })}>
+          <SmsProgress
+            responseCallback={(msg) => this.onResponse(msg)}
+            cancelCallback={() => this.setState({ sendingCommand: false })}
+            to={this.props.navigation.state.params.sender.number}
+            msg={this.createMessage(this.state.formValue)} />
+        </Modal>
+        <Form
           ref='form'
           type={this.formModel}
           value={this.state.formValue}
-          onChange={this.onValueChange}/>
-        <Button title='Send' 
-          onPress={() => alert(JSON.stringify(this.state.formValue))} />
+          onChange={this.onValueChange} />
+        <Button title='Send'
+          onPress={() => this.setState({sendingCommand: true})} />
       </View>);
   }
 
   onValueChange(value) {
-    this.setState({formValue: value});
+    this.setState({ formValue: value });
   }
 
   createFormEnum(inCount) {
@@ -70,6 +83,37 @@ export default class CommandLimitsScreen extends React.Component {
     }
     return t.enums(enumValues);
   }
+
+  onResponse(msg) {
+   this.setState({sendingCommand: false}); 
+   const {navigation} = this.props;
+   let command = this.state.formValue;
+   if (command.low) {
+     command.low = parseInt(command.low);
+   }
+   if (command.high) {
+     command.high = parseInt(command.high);
+   }
+   navigation.navigate('ResponseLimits', {command, response: msg});
+  }
+
+  createMessage({input, low, high, pin}) {
+    let msg = 'LIMITS ';
+    const port = input && input.replace(/^D+/g, '');
+
+    msg += port;
+
+    if (low) {
+      msg += ' L' + low;
+    }
+    if (high) {
+      msg += ' H' + high;
+    }
+
+    msg += ' ' + pin;
+
+    return msg;
+  }
 };
 
 const styles = StyleSheet.create({
@@ -78,4 +122,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10
   }
-})
+});

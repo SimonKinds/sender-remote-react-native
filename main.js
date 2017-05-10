@@ -10,6 +10,7 @@ import CommandOffScreen from './screens/CommandOffScreen';
 import CommandLimitsScreen from './screens/CommandLimitsScreen';
 
 import ResponseToggleOutputScreen from './screens/ResponseToggleOutputScreen';
+import ResponseLimitsScreen from './screens/ResponseLimitsScreen';
 
 const App = StackNavigator({
   SenderList: { screen: SenderListScreen },
@@ -21,7 +22,8 @@ const App = StackNavigator({
   CommandOff: {screen: CommandOffScreen},
   CommandLimits: {screen: CommandLimitsScreen},
 
-  ResponseToggleOutput: {screen: ResponseToggleOutputScreen}
+  ResponseToggleOutput: {screen: ResponseToggleOutputScreen},
+  ResponseLimits: {screen: ResponseLimitsScreen}
 });
 
 Expo.registerRootComponent(App);
