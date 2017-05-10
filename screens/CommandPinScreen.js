@@ -29,7 +29,7 @@ export default class CommandPinScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { sendingCommand: false, formValue: {pin: this.props.navigation.state.params.sender.pin, newPin: ''} };
+    this.state = { sendingCommand: false, formValue: {pin: '', newPin: ''} };
   }
 
   render() {
