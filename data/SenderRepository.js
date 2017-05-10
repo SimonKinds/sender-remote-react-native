@@ -36,3 +36,14 @@ export async function deleteSender(sender) {
     console.log(error);
   }
 }
+
+export async function updateSender(prevValue, newValue) {
+  try {
+    let senders = await getSenders();
+
+    senders = _.map(senders, (s) => _.isEqual(s, prevValue) ? newValue : s);
+    await AsyncStorage.setItem('senders', JSON.stringify(senders));
+  } catch (error) {
+    console.log(error);
+  }
+}

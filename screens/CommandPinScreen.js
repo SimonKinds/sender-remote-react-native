@@ -29,7 +29,7 @@ export default class CommandPinScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { sendingCommand: false, formValue: {pin: '', newPin: ''} };
+    this.state = { sendingCommand: false, formValue: { pin: '', newPin: '' } };
   }
 
   render() {
@@ -42,18 +42,23 @@ export default class CommandPinScreen extends React.Component {
           <SmsProgress
             responseCallback={(response) => {
               this.setState({ sendingCommand: false });
-              navigation.navigate('ResponsePin', {response});
+              navigation.navigate('ResponsePin',
+                {
+                  response,
+                  sender: navigation.state.params.sender,
+                  newPin: this.state.formValue.newPin
+                });
             }}
-            cancelCallback={() => this.setState({sendingCommand: false})}
+            cancelCallback={() => this.setState({ sendingCommand: false })}
             to={navigation.state.params.sender.number}
             msg={this.createMessage(this.state.formValue)} />
         </Modal>
         <Form
           ref='form'
           type={formModel}
-          options={formOptions} 
+          options={formOptions}
           value={this.state.formValue}
-          onChange={(value) => this.setState({formValue: value})} />
+          onChange={(value) => this.setState({ formValue: value })} />
         <Button title='Send' onPress={() => this.setState({ sendingCommand: true })} />
       </View>
     )
