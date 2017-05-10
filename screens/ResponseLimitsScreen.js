@@ -30,7 +30,7 @@ ResponseLimitsScreen.propTypes = {
         command: PropTypes.shape({
           low: PropTypes.number,
           high: PropTypes.number,
-          input: PropTypes.number.isRequired
+          input: PropTypes.string.isRequired
         }).isRequired
       }).isRequired
     }).isRequired
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18
   }
-})
+});

@@ -66,7 +66,8 @@ export default class CommandLimitsScreen extends React.Component {
           ref='form'
           type={this.formModel}
           value={this.state.formValue}
-          onChange={this.onValueChange} />
+          onChange={this.onValueChange}
+          options={this.formOptions} />
         <Button title='Send'
           onPress={() => this.setState({sendingCommand: true})} />
       </View>);
