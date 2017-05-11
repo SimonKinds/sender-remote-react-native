@@ -15,7 +15,8 @@ export default class CommandSimpleScreen extends React.Component {
         params: PropTypes.shape({
           sender: PropTypes.object.isRequired,
           title: PropTypes.string.isRequired,
-          commandHeader: PropTypes.string.isRequired
+          commandHeader: PropTypes.string.isRequired,
+          responseScreen: PropTypes.string.isRequired
         }).isRequired
       }).isRequired
     }).isRequired
@@ -46,7 +47,7 @@ export default class CommandSimpleScreen extends React.Component {
           <SmsProgress
             responseCallback={(response) => {
               this.setState({ sendingCommand: false });
-              navigation.navigate('ResponsePortStatus',
+              navigation.navigate(navigation.state.params.responseScreen,
                 {
                   response
                 });

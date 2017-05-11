@@ -66,19 +66,43 @@ export default class CommandListScreen extends Component {
               break;
             case 'status':
               destination = 'CommandSimple';
-              params = {title: 'Status Command', commandHeader: 'STATUS'};
+              params = {
+                title: 'Status Command',
+                commandHeader: 'STATUS',
+                responseScreen: 'ResponsePortStatus'
+              };
               break;
             case 'temperature':
               destination = 'CommandSimple';
-              params = {title: 'Temperature Command', commandHeader: 'TEMP'};
+              params = {
+                title: 'Temperature Command',
+                commandHeader: 'TEMP',
+                responseScreen: 'ResponsePortStatus'
+              };
               break;
             case 'humidity':
               destination = 'CommandSimple';
-              params = {title: 'Humidity Command', commandHeader: 'HUMID'};
+              params = {
+                title: 'Humidity Command',
+                commandHeader: 'HUMID',
+                responseScreen: 'ResponsePortStatus'
+              };
               break;
             case 'measurements':
               destination = 'CommandSimple';
-              params = {title: 'Measurements Command', commandHeader: 'MEAS'};
+              params = {
+                title: 'Measurements Command',
+                commandHeader: 'MEAS',
+                responseScreen: 'ResponsePortStatus'
+              };
+              break;
+            case 'sw':
+              destination = 'CommandSimple';
+              params = {
+                title: 'Technical Status Command',
+                commandHeader: 'SW',
+                responseScreen: 'ResponseTechnicalStatus'
+              };
               break;
           }
 
