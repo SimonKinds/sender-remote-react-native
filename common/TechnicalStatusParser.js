@@ -4,7 +4,7 @@ export function getValues(response) {
   const splits = response.split(',');
 
   return _.map(splits, (split) => {
-    const matches = /(.+):\s*(.+)/g.exec(split);
+    const matches = /\s*(.+):\s*(.+)/g.exec(split);
     return {field: matches[1], value: matches[2]};
   });
 }

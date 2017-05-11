@@ -13,3 +13,13 @@ test('Parse multiple fields', () => {
     ]
   );
 });
+
+test('Removes whitespace after comma', () => {
+  expect(getValues('ID: Test59209658, Typ: Airborne DC Dual'))
+  .toEqual(
+    [
+      {field: 'ID', value: 'Test59209658'},
+      {field: 'Typ', value: 'Airborne DC Dual'}
+    ]
+  );
+})
