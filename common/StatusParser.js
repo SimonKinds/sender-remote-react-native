@@ -9,7 +9,10 @@ export function getValues(response) {
 
   const objectsAsLists = _.zip(types, portNumbers, values);
 
-  return _.map(objectsAsLists, list => ({ type: list[0], portNumber: list[1], value: list[2] }));
+  const objects = _.map(objectsAsLists, list => ({ type: list[0], portNumber: list[1], value: list[2] }));
+
+  // in before out, it's lexicographical order
+  return _.sortBy(objects, ['type', 'portNumber']);
 }
 
 function getPortNumber(val) {
