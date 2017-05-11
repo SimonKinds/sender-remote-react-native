@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import {getValues} from '../common/StatusParser';
+import {getValues} from '../common/PortStatusParser';
 
 export default function ResponsePortStatusScreen(props) {
   return (

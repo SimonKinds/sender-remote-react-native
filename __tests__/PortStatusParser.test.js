@@ -1,4 +1,4 @@
-import { getValues } from '../common/StatusParser';
+import { getValues } from '../common/PortStatusParser';
 
 test('Parse single status input', () => {
   expect(getValues('STATUS: IN01=3%')[0]).toEqual({ type: 'in', portNumber: 1, value: '3%' });
@@ -26,4 +26,16 @@ test('Ports are sorted by type and then port numbers', () => {
       { type: 'in', portNumber: 5, value: '3' },
       { type: 'out', portNumber: 1, value: '0' },
       { type: 'out', portNumber: 99, value: '1' }]);
+});
+
+test('Can parse temperature', () => {
+  expect(getValues('Temperatur: IN01=3%')[0]).toEqual({ type: 'in', portNumber: 1, value: '3%' });
+});
+
+test('Can parse humidity', () => {
+  expect(getValues('Humidity: IN01=3%')[0]).toEqual({ type: 'in', portNumber: 1, value: '3%' });
+});
+
+test('Can parse measurements', () => {
+  expect(getValues('Measurements: IN01=3%')[0]).toEqual({ type: 'in', portNumber: 1, value: '3%' });
 });
