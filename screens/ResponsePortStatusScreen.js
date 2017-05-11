@@ -9,7 +9,7 @@ import {getValues} from '../common/PortStatusParser';
 export default function ResponsePortStatusScreen(props) {
   return (
     <View style={styles.container}>
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.scrollView}>
       {createSections(getValues(props.navigation.state.params.response))}
     </ScrollView>
     </View>
@@ -25,12 +25,17 @@ function createSections(values) {
       header = 'Output ' + val.portNumber;
     }
 
+    let textStyles = [styles.sectionText];
+    if (val.alarm) {
+      textStyles.push(styles.alarmText)
+    }
+
     sections.push(
-      <View key={header}>
+      <View key={header} style={styles.section}>
         <Text style={styles.sectionHeader}>
           {header}
         </Text>
-        <Text style={styles.sectionText}>
+        <Text style={textStyles}>
           {val.value}
         </Text>
         </View>)
@@ -68,14 +73,22 @@ ResponsePortStatusScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
+  },
+  scrollView: {
     padding: 10
   },
   sectionHeader: {
     fontSize: 20,
     fontWeight: 'bold'
   },
+  section: {
+    marginBottom: 10,
+  },
   sectionText: {
     fontSize: 16
+  },
+  alarmText: {
+    color: '#ff0033'
   }
 });
