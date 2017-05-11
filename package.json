@@ -5,6 +5,9 @@
   "author": "Simon Kindström",
   "private": true,
   "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "expo": "16.0.0",
     "lodash": "^4.17.4",
@@ -19,6 +22,7 @@
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^6.10.3",
-    "eslint-plugin-react-native": "^2.3.2"
+    "eslint-plugin-react-native": "^2.3.2",
+    "jest": "^20.0.0"
   }
 }
