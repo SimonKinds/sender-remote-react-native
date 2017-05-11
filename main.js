@@ -14,7 +14,7 @@ import CommandSimpleScreen from './screens/CommandSimpleScreen';
 import ResponseToggleOutputScreen from './screens/ResponseToggleOutputScreen';
 import ResponseLimitsScreen from './screens/ResponseLimitsScreen';
 import ResponsePinScreen from './screens/ResponsePinScreen';
-import ResponseStatusScreen from './screens/ResponseStatusScreen';
+import ResponsePortStatusScreen from './screens/ResponsePortStatusScreen';
 
 const App = StackNavigator({
   SenderList: { screen: SenderListScreen },
@@ -31,7 +31,7 @@ const App = StackNavigator({
   ResponseToggleOutput: {screen: ResponseToggleOutputScreen},
   ResponseLimits: {screen: ResponseLimitsScreen},
   ResponsePin: {screen: ResponsePinScreen},
-  ResponseStatus: {screen: ResponseStatusScreen}
+  ResponsePortStatus: {screen: ResponsePortStatusScreen}
 });
 
 Expo.registerRootComponent(App);

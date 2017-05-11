@@ -46,7 +46,7 @@ export default class CommandSimpleScreen extends React.Component {
           <SmsProgress
             responseCallback={(response) => {
               this.setState({ sendingCommand: false });
-              navigation.navigate('ResponseStatus',
+              navigation.navigate('ResponsePortStatus',
                 {
                   response
                 });

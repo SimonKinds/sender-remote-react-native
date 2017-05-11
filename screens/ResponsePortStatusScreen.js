@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation';
 
 import {getValues} from '../common/StatusParser';
 
-export default function ResponseStatusScreen(props) {
+export default function ResponsePortStatusScreen(props) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {createSections(getValues(props.navigation.state.params.response))}
@@ -37,7 +37,7 @@ function createSections(values) {
   return sections;
 }
 
-ResponseStatusScreen.propTypes = {
+ResponsePortStatusScreen.propTypes = {
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       params: PropTypes.shape({
@@ -47,7 +47,7 @@ ResponseStatusScreen.propTypes = {
   }).isRequired
 };
 
-ResponseStatusScreen.navigationOptions = ({ navigation }) => ({
+ResponsePortStatusScreen.navigationOptions = ({ navigation }) => ({
   title: 'Success',
   headerRight: (<Text onPress={() => {
     const resetAction = NavigationActions.reset(({
