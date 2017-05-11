@@ -50,6 +50,7 @@ export default class CommandListScreen extends Component {
         underlayColor='#d3d3d3'
         onPress={() => {
           let destination = null;
+          let params = {};
           switch (item.type) {
             case 'on':
               destination = 'CommandOn';
@@ -64,12 +65,14 @@ export default class CommandListScreen extends Component {
               destination = 'CommandPin';
               break;
             case 'status':
-              destination = 'CommandStatus';
+              destination = 'CommandSimple';
+              params = {title: 'Status Command', commandHeader: 'STATUS'};
               break;
           }
 
           if (destination) {
             navigation.navigate(destination, {
+              ...params,
               sender: navigation.state.params.sender,
               command: item
             });

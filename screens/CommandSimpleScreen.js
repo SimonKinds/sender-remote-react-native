@@ -8,23 +8,25 @@ import SmsProgress from '../components/SmsProgress';
 
 const Form = t.form.Form;
 
-export default class CommandStatusScreen extends React.Component {
+export default class CommandSimpleScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.shape({
       state: PropTypes.shape({
         params: PropTypes.shape({
-          sender: PropTypes.object.isRequired
+          sender: PropTypes.object.isRequired,
+          title: PropTypes.string.isRequired,
+          commandHeader: PropTypes.string.isRequired
         }).isRequired
       }).isRequired
     }).isRequired
   };
 
-  static navigationOptions = {
-    title: 'Status Command',
+  static navigationOptions = ({navigation}) => ({
+    title: navigation.state.params.title,
     headerStyle: {
       marginTop: Expo.Constants.statusBarHeight
     }
-  }
+  });
 
   constructor(props) {
     super(props);
@@ -66,7 +68,7 @@ export default class CommandStatusScreen extends React.Component {
 
   createMessage({pin}) {
     if (pin) {
-      return 'STATUS ' + pin;
+      return this.props.navigation.state.params.commandHeader + ' ' + pin;
     }
     return '';
   }
