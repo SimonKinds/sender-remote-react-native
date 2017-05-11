@@ -8,9 +8,11 @@ import {getValues} from '../common/PortStatusParser';
 
 export default function ResponsePortStatusScreen(props) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
+    <ScrollView>
       {createSections(getValues(props.navigation.state.params.response))}
     </ScrollView>
+    </View>
   ) }
 
 function createSections(values) {
@@ -65,6 +67,7 @@ ResponsePortStatusScreen.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
     padding: 10
   },
