@@ -112,4 +112,4 @@ function messageResponse(type: Command, ws: any) {
   ws.close(1000, 'message sent to sender, and response sent back to client');
 }
 
-app.listen(9137, 'localhost');
+app.listen(9137, 'kindstrom.io');
