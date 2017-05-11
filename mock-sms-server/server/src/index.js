@@ -101,7 +101,7 @@ function messageResponse(type: Command, ws: any) {
       msg = 'Status: IN01=76, IN02=1, IN03=+16%, IN04=!+26C,IN05=-15C, IN06=+13C, IN07=1293, IN08=0, OUT01=1, OUT02=0, OUT03=0, OUT04=1'
       break;
     case 'SW':
-      msg = 'Test59209658,Typ: Airborne DC Dual     SS    SW: 1.16.58, Signal: 17, Switch: 2, Power: OK, Battery: OK, Tamper: OK, IP: OK'
+      msg = 'ID: Test59209658,Typ: Airborne DC Dual     SS    SW: 1.16.58, Signal: 17, Switch: 2, Power: OK, Battery: OK, Tamper: OK, IP: OK'
       break;
     case 'PIN':
       msg = 'OK, new PIN lagrad';
