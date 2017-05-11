@@ -44,7 +44,7 @@ export default class CommandStatusScreen extends React.Component {
           <SmsProgress
             responseCallback={(response) => {
               this.setState({ sendingCommand: false });
-              navigation.navigate('ResponseToggleOutput',
+              navigation.navigate('ResponseStatus',
                 {
                   response
                 });
