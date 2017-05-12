@@ -1,9 +1,8 @@
-import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
+import { ResponseNavigationOptions } from '../common/CommonViews';
 import CommonStyles from '../common/CommonStyles';
 import { updateSender } from '../data/SenderRepository';
 
@@ -20,21 +19,7 @@ export default class ResponsePinScreen extends React.Component {
     }).isRequired
   };
 
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Success',
-    headerRight: (<Text onPress={() => {
-      const resetAction = NavigationActions.reset(({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'SenderList' })
-        ]
-      }));
-      navigation.dispatch(resetAction);
-    }}>Done</Text>),
-    headerStyle: {
-      marginTop: Expo.Constants.statusBarHeight
-    }
-  });
+  static navigationOptions = ResponseNavigationOptions;
 
   constructor(props) {
     super(props);

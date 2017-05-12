@@ -1,9 +1,8 @@
-import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
+import { ResponseNavigationOptions } from '../common/CommonViews';
 import CommonStyles from '../common/CommonStyles';
 import { getValues } from '../common/PortStatusParser';
 
@@ -56,21 +55,7 @@ ResponsePortStatusScreen.propTypes = {
   }).isRequired
 };
 
-ResponsePortStatusScreen.navigationOptions = ({ navigation }) => ({
-  title: 'Success',
-  headerRight: (<Text onPress={() => {
-    const resetAction = NavigationActions.reset(({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'SenderList' })
-      ]
-    }));
-    navigation.dispatch(resetAction);
-  }}>Done</Text>),
-  headerStyle: {
-    marginTop: Expo.Constants.statusBarHeight
-  }
-});
+ResponsePortStatusScreen.navigationOptions = ResponseNavigationOptions;
 
 const styles = StyleSheet.create({
   container: {

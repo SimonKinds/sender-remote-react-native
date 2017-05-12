@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import Expo from 'expo';
+import { StyleSheet } from 'react-native';
 
 const ListItemStyle = StyleSheet.create({
   container: {
@@ -13,9 +14,14 @@ const ListItemStyle = StyleSheet.create({
   }
 });
 
+const headerStyle = {
+  marginTop: Expo.Constants.statusBarHeight
+};
+
 const backgroundColor = '#fff';
 
 module.exports = {
   ListItemStyle,
+  headerStyle,
   backgroundColor
 };
