@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "expo": "16.0.0",
+    "flow-bin": "0.40.0",
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-16.0.0.tar.gz",

@@ -1,3 +1,5 @@
+// @flow
+
 import Expo from 'expo';
 import { StackNavigator } from 'react-navigation';
 
