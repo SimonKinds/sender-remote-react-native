@@ -1,3 +1,5 @@
+// @flow
+
 import {getValues} from '../common/TechnicalStatusParser';
 
 test('Parse ID', () => {

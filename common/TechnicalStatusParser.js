@@ -1,6 +1,9 @@
+// @flow
 import _ from 'lodash';
 
-export function getValues(response) {
+type ParsedStatus = {field: string, value: string};
+
+export function getValues(response: string): Array<ParsedStatus> {
   const splits = response.split(',');
 
   return _.map(splits, (split) => {
