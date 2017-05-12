@@ -1,10 +1,10 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
 import { StyleSheet, Keyboard, View, Button, Alert, Modal } from 'react-native';
-import {NavigationActions} from 'react-navigation';
 import t from 'tcomb-form-native';
 import _ from 'lodash';
 
+import CommonStyles from '../common/CommonStyles';
 import { insertSender } from '../data/SenderRepository';
 import SmsProgress from '../components/SmsProgress';
 
@@ -45,7 +45,7 @@ export default class SenderCreateScreen extends Component {
     this.createSender = this.createSender.bind(this);
     this.onResponse = this.onResponse.bind(this);
 
-    this.state = {to: '', msg: '', sendingCommand: false, formValue: {}}
+    this.state = { to: '', msg: '', sendingCommand: false, formValue: {} }
   }
 
   render() {
@@ -55,7 +55,7 @@ export default class SenderCreateScreen extends Component {
           onRequestClose={() => this.setState({ sendingCommand: false })}>
           <SmsProgress
             responseCallback={(msg) => this.onResponse(msg, this.state.formValue)}
-            cancelCallback={() => this.setState({sendingCommand: false})}
+            cancelCallback={() => this.setState({ sendingCommand: false })}
             to={this.state.to}
             msg={this.state.msg} />
         </Modal>
@@ -64,7 +64,7 @@ export default class SenderCreateScreen extends Component {
           type={sender}
           options={formOptions}
           value={this.state.formValue}
-          onChange={(value) => this.setState({formValue: value})}
+          onChange={(value) => this.setState({ formValue: value })}
         />
         <Button title='Create'
           onPress={() => {
@@ -79,10 +79,10 @@ export default class SenderCreateScreen extends Component {
     if (sender == null) {
       console.log('Invalid sender is trying to get created');
     } else {
-      this.setState( {
-          to: sender.number,
-          msg: 'STATUS ' + sender.pin,
-          sendingCommand: true
+      this.setState({
+        to: sender.number,
+        msg: 'STATUS ' + sender.pin,
+        sendingCommand: true
       });
     }
   }
@@ -133,7 +133,7 @@ export default class SenderCreateScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: CommonStyles.backgroundColor,
     padding: 10
   }
 })

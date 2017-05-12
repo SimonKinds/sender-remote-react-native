@@ -4,7 +4,7 @@ import { StyleSheet, TouchableHighlight, Text, FlatList } from 'react-native';
 
 import { getSenders } from '../data/SenderRepository';
 import { Separator } from '../common/CommonViews';
-import { ListItemStyle } from '../common/CommonStyles';
+import CommonStyles from '../common/CommonStyles';
 
 function HeaderRight(props) {
   const { navigation } = props;
@@ -60,10 +60,10 @@ export default class SenderListScreen extends Component {
 
   renderItem({ item }) {
     return (
-      <TouchableHighlight style={ListItemStyle.container}
+      <TouchableHighlight style={CommonStyles.ListItemStyle.container}
         underlayColor='#d3d3d3'
         onPress={() => this.props.navigation.navigate('CommandList', { sender: item })}>
-        <Text style={ListItemStyle.text}>{item.name}</Text>
+        <Text style={CommonStyles.ListItemStyle.text}>{item.name}</Text>
       </TouchableHighlight>);
   }
 
@@ -79,6 +79,7 @@ export default class SenderListScreen extends Component {
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1
+    flex: 1,
+    backgroundColor: CommonStyles.backgroundColor
   }
 });

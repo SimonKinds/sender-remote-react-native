@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const ListItemStyle = StyleSheet.create({
+const ListItemStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 12,
@@ -12,3 +12,10 @@ export const ListItemStyle = StyleSheet.create({
     fontSize: 16
   }
 });
+
+const backgroundColor = '#fff';
+
+module.exports = {
+  ListItemStyle,
+  backgroundColor
+};

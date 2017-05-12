@@ -1,9 +1,10 @@
 import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Button, Modal} from 'react-native';
+import { StyleSheet, View, Button, Modal } from 'react-native';
 import t from 'tcomb-form-native';
 
+import CommonStyles from '../common/CommonStyles';
 import SmsProgress from '../components/SmsProgress';
 
 const Form = t.form.Form;
@@ -33,7 +34,7 @@ export default class CommandLimitsScreen extends React.Component {
     this.onResponse = this.onResponse.bind(this);
     this.createMessage = this.createMessage.bind(this);
 
-    const {sender} = this.props.navigation.state.params;
+    const { sender } = this.props.navigation.state.params;
 
     this.formModel = t.struct({
       low: t.maybe(t.Number),
@@ -69,7 +70,7 @@ export default class CommandLimitsScreen extends React.Component {
           onChange={this.onValueChange}
           options={this.formOptions} />
         <Button title='Send'
-          onPress={() => this.setState({sendingCommand: true})} />
+          onPress={() => this.setState({ sendingCommand: true })} />
       </View>);
   }
 
@@ -86,19 +87,19 @@ export default class CommandLimitsScreen extends React.Component {
   }
 
   onResponse(msg) {
-   this.setState({sendingCommand: false}); 
-   const {navigation} = this.props;
-   let command = this.state.formValue;
-   if (command.low) {
-     command.low = parseInt(command.low);
-   }
-   if (command.high) {
-     command.high = parseInt(command.high);
-   }
-   navigation.navigate('ResponseLimits', {command, response: msg});
+    this.setState({ sendingCommand: false });
+    const { navigation } = this.props;
+    let command = this.state.formValue;
+    if (command.low) {
+      command.low = parseInt(command.low);
+    }
+    if (command.high) {
+      command.high = parseInt(command.high);
+    }
+    navigation.navigate('ResponseLimits', { command, response: msg });
   }
 
-  createMessage({input, low, high, pin}) {
+  createMessage({ input, low, high, pin }) {
     let msg = 'LIMITS ';
     const port = input && input.replace(/^D+/g, '');
 
@@ -120,7 +121,7 @@ export default class CommandLimitsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: CommonStyles.backgroundColor,
     padding: 10
   }
 });

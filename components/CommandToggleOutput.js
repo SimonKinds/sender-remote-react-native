@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Button, Text, Modal } from 'react-native';
 import t from 'tcomb-form-native';
 
+import CommonStyles from '../common/CommonStyles';
 import SmsProgress from '../components/SmsProgress';
 
 const Form = t.form.Form;
@@ -146,7 +147,7 @@ function getOutputs(fields) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: CommonStyles.backgroundColor,
     padding: 10,
   },
   checkboxContainer: {

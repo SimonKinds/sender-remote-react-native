@@ -4,7 +4,7 @@ import { StyleSheet, FlatList, TouchableHighlight, Text } from 'react-native';
 
 import { getCommands } from '../data/CommandRepository';
 import { Separator } from '../common/CommonViews';
-import { ListItemStyle } from '../common/CommonStyles';
+import CommonStyles from '../common/CommonStyles';
 
 export default class CommandListScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -46,7 +46,7 @@ export default class CommandListScreen extends Component {
   renderItem({ item }) {
     const { navigation } = this.props;
     return (
-      <TouchableHighlight style={ListItemStyle.container}
+      <TouchableHighlight style={CommonStyles.ListItemStyle.container}
         underlayColor='#d3d3d3'
         onPress={() => {
           let destination = null;
@@ -116,7 +116,7 @@ export default class CommandListScreen extends Component {
             alert('Clicked: ' + JSON.stringify(item))
           }
         }}>
-        <Text style={ListItemStyle.text}>{item.description}</Text>
+        <Text style={CommonStyles.ListItemStyle.text}>{item.description}</Text>
       </TouchableHighlight>
     )
   }
@@ -133,6 +133,7 @@ export default class CommandListScreen extends Component {
 
 const styles = StyleSheet.create({
   list: {
-    flex: 1
+    flex: 1,
+    backgroundColor: CommonStyles.backgroundColor
   }
 });

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
+import CommonStyles from '../common/CommonStyles';
 import { updateSender } from '../data/SenderRepository';
 
 export default class ResponsePinScreen extends React.Component {
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: CommonStyles.backgroundColor
   },
   text: {
     fontSize: 18

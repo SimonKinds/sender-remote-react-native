@@ -2,10 +2,12 @@ import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
-import {NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
+
+import CommonStyles from '../common/CommonStyles';
 
 export default function ResponseLimitsScreen(props) {
-  const {response, command} = props.navigation.state.params;
+  const { response, command } = props.navigation.state.params;
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{fancyText(command, response)}</Text>
@@ -56,7 +58,7 @@ ResponseLimitsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: CommonStyles.backgroundColor,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center'

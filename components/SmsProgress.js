@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
+import CommonStyles from '../common/CommonStyles';
 import {sendSms} from '../data/SmsApi';
 
 export default class SmsProgress extends React.Component {
@@ -66,9 +67,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: CommonStyles.backgroundColor,
     padding: 10
   },
-  text: {flex: 0},
+  text: {flex: 0, marginBottom: 20},
   button: {flex: 0}
 })

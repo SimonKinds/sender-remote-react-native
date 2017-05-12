@@ -1,7 +1,7 @@
 import Rx from 'rxjs';
 
 const protocol = 'ws://';
-const host = '10.0.2.2:9137';
+const host = 'kindstrom.io:9137';
 const path = '/sms';
 
 export function sendSms(to, msg) {

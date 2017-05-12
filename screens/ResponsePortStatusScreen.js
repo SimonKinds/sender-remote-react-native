@@ -1,19 +1,21 @@
 import Expo from 'expo';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import {getValues} from '../common/PortStatusParser';
+import CommonStyles from '../common/CommonStyles';
+import { getValues } from '../common/PortStatusParser';
 
 export default function ResponsePortStatusScreen(props) {
   return (
     <View style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollView}>
-      {createSections(getValues(props.navigation.state.params.response))}
-    </ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        {createSections(getValues(props.navigation.state.params.response))}
+      </ScrollView>
     </View>
-  ) }
+  )
+}
 
 function createSections(values) {
   let sections = [];
@@ -38,7 +40,7 @@ function createSections(values) {
         <Text style={textStyles}>
           {val.value}
         </Text>
-        </View>)
+      </View>)
   }
 
   return sections;
@@ -73,7 +75,7 @@ ResponsePortStatusScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: CommonStyles.backgroundColor
   },
   scrollView: {
     padding: 10
