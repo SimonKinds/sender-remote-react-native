@@ -9,11 +9,12 @@ import CommonStyles from '../common/CommonStyles';
 function HeaderRight(props) {
   const { navigation } = props;
   let name = 'empty';
+  let params = {};
   if (navigation.state != null && navigation.state.params != null) {
     params = { refreshSenders: navigation.state.params.refreshSenders };
   }
   return (
-    <Text onPress={() => navigation.navigate('SenderCreate', params)}>
+    <Text style={{marginRight: 10}} onPress={() => navigation.navigate('SenderCreate', params)}>
       Create Sender
   </Text>);
 }
