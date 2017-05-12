@@ -1,29 +1,24 @@
+// @flow
 import _ from 'lodash';
 
-export function getValues(response) {
+type PortType = 'in' | 'out';
+type ParsedPort = {type: PortType, portNumber: number, value: string, alarm: boolean};
+
+export function getValues(response: string): Array<ParsedPort> {
   const splits = response.split(',');
 
-  const types = _.map(splits, val => val.toLowerCase().includes('in') ? 'in' : 'out');
-  const portNumbers = _.map(splits, val => getPortNumber(val));
-  const values = _.map(splits, val => val.replace(/^[^=]+=!?/g, ''));
-  const alarms = _.map(splits, val => isAlarm(val));
-
-  const objectsAsLists = _.zip(types, portNumbers, values, alarms);
-
-  const objects = _.map(objectsAsLists, list => ({ type: list[0], portNumber: list[1], value: list[2], alarm: list[3] }));
-
-  // in before out, it's lexicographical order
-  return _.sortBy(objects, ['type', 'portNumber']);
+  return _.sortBy(_.map(splits, (split: string): ParsedPort => {
+    const matches = /.*(IN|OUT)(\d+)=(!)?(.+)/g.exec(split);
+    const type = getType(matches[1]);
+    const portNumber = parseInt(matches[2]);
+    const value = matches[4];
+    const alarm = matches[3] != undefined;
+    return { type, portNumber, value, alarm };
+  }), ['type', 'portNumber']);
 }
-
-function getPortNumber(val) {
-  const regex = /\D*(?:IN|OUT)(\d+)=.+/g;
-  const matches = regex.exec(val);
-  return parseInt(matches[1]);
-}
-
-function isAlarm(val) {
-  const regex = /\D*(?:IN|OUT)\d+=(!)?.+/g;
-  const matches = regex.exec(val);
-  return matches[1] ? true : false;
+function getType(val: string): PortType {
+  if (val == 'IN') {
+    return 'in';
+  }
+  return 'out';
 }

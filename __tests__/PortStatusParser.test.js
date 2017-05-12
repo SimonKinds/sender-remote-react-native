@@ -1,3 +1,5 @@
+// @flow
+
 import { getValues } from '../common/PortStatusParser';
 
 test('Parse single status input', () => {
