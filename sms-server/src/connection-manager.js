@@ -1,6 +1,6 @@
 // @flow
 
-class ConnectionManager {
+export default class ConnectionManager {
   connections: {[number: string]: ?WebSocket}
 
   pushConnection(number: string, ws: WebSocket) {
