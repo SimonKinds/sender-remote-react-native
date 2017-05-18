@@ -1,6 +1,6 @@
 {
   "name": "sender-remote",
-  "description": "An empty new project",
+  "description": "A demo application for AddSecure",
   "slug": "sender-remote",
   "privacy": "public",
   "sdkVersion": "16.0.0",
