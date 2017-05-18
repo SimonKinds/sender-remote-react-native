@@ -6,7 +6,7 @@ const app = express();
 const expressWs = require('express-ws')(app);
 
 type Command = 'ON' | 'OFF' | 'LIMITS' | 'TEMP' | 'HUMID' | 'MEAS' | 'STATUS' | 'SW' | 'PIN'
-type ResponseEvent = 'sent' | 'delivered' | 'response';
+type ResponseEvent = 'sent' | 'delivered' | 'received';
 
 app.ws('/sms', (ws, request) => {
   ws.on('open', () => {
@@ -107,7 +107,7 @@ function messageResponse(type: Command, ws: any) {
       msg = 'OK, new PIN lagrad';
       break;
   }
-  const event: ResponseEvent = 'response';
+  const event: ResponseEvent = 'received';
   ws.send(JSON.stringify({event, msg}));
   ws.close(1000, 'message sent to sender, and response sent back to client');
 }
