@@ -33,7 +33,7 @@ export default class SmsProgress extends React.Component {
   }
 
   async smsSubscriber({event, msg}) {
-    if (event === 'response') {
+    if (event === 'received') {
       await this.props.responseCallback(msg);
     } else {
       this.setState({ responseState: event })

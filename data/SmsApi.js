@@ -6,7 +6,7 @@ const path = '/sms';
 
 export function sendSms(to, msg) {
   console.log('opening to ' + protocol + host + path);
-  
+
   const ws = new WebSocket(protocol + host + path);
 
   return Rx.Observable.create(observer => {
@@ -25,6 +25,11 @@ export function sendSms(to, msg) {
 
     ws.onerror = (e) => {
       observer.error(e);
+    }
+
+    return () => {
+      console.log('Closing connection to server because of unsubscribe');
+      ws.close()
     }
   });
 }
