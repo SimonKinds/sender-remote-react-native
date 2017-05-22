@@ -15,7 +15,6 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "phone": "^1.0.10",
     "twilio": "^3.0.0",
     "ws": "^2.3.1"
   }

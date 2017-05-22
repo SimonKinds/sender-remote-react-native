@@ -3,7 +3,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import WebSocket from 'ws';
-import phone from 'phone';
 import Twilio from 'twilio';
 
 import ConnectionManager from './connection-manager';
@@ -15,6 +14,7 @@ type ClientResponse = {event: TwilioMessageStatus, msg?: string};
 
 const ErrorMissingParameters = { code: 4000, msg: 'Missing Parameters' };
 const ErrorInvalidNumber = { code: 4001, msg: 'Invalid phone number' };
+const ErrorTwilioSendingSms = { code: 4002 };
 
 const twilioAccountSid = 'ACecf79338050536dc44b41b9f24307424';
 const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
@@ -43,15 +43,10 @@ websocketServer.on('connection', (ws) => {
 
     const { to, msg } = request;
 
-    if (phone(to).length == 0) {
-      console.log(to + ' is an invalid phone number');
-      return ws.close(ErrorInvalidNumber.code, ErrorInvalidNumber.msg);
-    }
-
     connectionManager.pushConnection(to, ws);
     number = to;
 
-    sendSms(phone(to)[0], msg, ws);
+    sendSms(to, msg, ws);
   });
 
   ws.on('close', () => {
@@ -71,7 +66,10 @@ function sendSms(to: string, message: string, ws: any) {
     from: '+46765193221',
     statusCallback: 'http://kindstrom.io:' + httpPort + '/sms/status'
   })
-  .then();
+    .catch(e => {
+      console.log('Twilio error sending message: ' + e);
+      ws.close(ErrorTwilioSendingSms, e);
+    });
 }
 
 const app = express();
