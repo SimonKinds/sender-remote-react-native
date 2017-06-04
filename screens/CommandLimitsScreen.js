@@ -101,15 +101,23 @@ export default class CommandLimitsScreen extends React.Component {
 
   createMessage({ input, low, high, pin }) {
     let msg = 'LIMITS ';
-    const port = input && input.replace(/^D+/g, '');
+    const port = input && input.replace(/input/g, '');
 
     msg += port;
 
     if (low) {
-      msg += ' L' + low;
+      if (low < 0) {
+        msg += ' -L' + Math.abs(low);
+      } else {
+        msg += ' L' + low;
+      }
     }
     if (high) {
-      msg += ' H' + high;
+      if (high < 0) {
+        msg += ' -H' + Math.abs(high);
+      } else {
+        msg += ' H' + high;
+      }
     }
 
     msg += ' ' + pin;
